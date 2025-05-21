@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/RupenderSinghRathore/github-Activities/internals/models"
+	"github.com/RupenderSinghRathore/github-Activity/internal/models"
 )
 
 func apiCall(user string) *[]models.Activity {
