@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 )
 
 func main() {
@@ -10,5 +9,5 @@ func main() {
 	flag.Parse()
 
 	activities := apiCall(*user)
-	fmt.Println(activities)
+	eventsEva(*activities)
 }
