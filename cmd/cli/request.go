@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -20,26 +19,13 @@ func apiCall(user string) *[]models.Activity {
 	}
 	defer res.Body.Close()
 
-	var buffer bytes.Buffer
-	data := make([]byte, 1024)
-	for {
-		n, err := res.Body.Read(data)
-		if n > 0 {
-			_, writeErr := buffer.Write(data[:n])
-			if writeErr != nil {
-				log.Fatal(writeErr)
-			}
-		}
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	activities := &[]models.Activity{}
-	if err = json.Unmarshal(buffer.Bytes(), activities); err != nil {
+	if err = json.Unmarshal(data, activities); err != nil {
 		log.Fatal(err)
 	}
 	return activities
